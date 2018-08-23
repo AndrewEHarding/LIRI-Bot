@@ -8,5 +8,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "fs": "0.0.1-security",
+    "moment": "^2.22.2"
+  }
 }
