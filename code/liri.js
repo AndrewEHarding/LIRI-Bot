@@ -7,8 +7,19 @@ var keys = require("./keys");
 
 const cLog = console.log;
 
+bandsKey = keys.exports.bandsintown.id;
+omdbKey = keys.exports.omdb.id;
+
 var command = process.argv[2];
 var input = process.argv.slice(3).join(" ");
+
+//REQUEST TEMPLATE
+// request("URL", function (error, response, body) {
+//     if (!error && response.statusCode === 200) {
+//         var jsonData = JSON.parse(body);
+
+//     }
+// });
 
 function concertThis() {
     if (!input) {
@@ -16,6 +27,14 @@ function concertThis() {
     }
     else {
         cLog(`Got it, searching for bandsintown ${input} concerts...`);
+
+        request(`https://rest.bandsintown.com/artists/${input}/events?app_id=${bandsKey}`, function (error, response, body) {
+            if (!error && response.statusCode === 200) {
+                var jsonData = JSON.parse(body);
+                cLog(`Name of Venue: ${jsonData[0].vanue.name}\nVenue Location: ${jsonData[0].vanue.city}, ${jsonData[0].vanue.region}\nDate: ${jsonData[0].datetime.moment(MMDDYYYY)}`);
+            }
+        });
+
     }
 
 }
@@ -28,28 +47,44 @@ function spotifyThis() {
     }
     else {
         cLog(`Now requesting Spotify info on ${input}...`);
+
+        spotify.search({ type: 'track', query: input }, function (error, response, body) {
+            if (!error && response.statusCode === 200) {
+                var jsonData = JSON.parse(body);
+                cLog(jsonData);
+            }
+        });
+
     }
 
 }
 
 function movieThis() {
-    if (!input){
+    if (!input) {
         cLog(`That's cool, I'll just pick a movie for you. Here's one of my favorites...`);
         input = "Mr. Nobody";
         movieThis();
     }
-    else{
+    else {
         cLog(`Let's all go to the lobby! And then come back when I grab that OMDb info on ${input}...`);
+
+        request(`http://www.omdbapi.com/?t=${input}&apikey=${omdbKey}`, function (error, response, body) {
+            if (!error && response.statusCode === 200) {
+                var jsonData = JSON.parse(body);
+                cLog(jsonData);
+            }
+        });
+
     }
 }
 
 function doThis() {
     cLog(`Y0U Kn0vv NO7 vvH4+ y0U D0!!!1`);
-    fs.readFile('random.txt', "utf8", function(error, data){
-        if(error){
+    fs.readFile('random.txt', "utf8", function (error, data) {
+        if (error) {
             cLog(`There was an error reading the file, you were spared... This time.`);
         }
-        else{
+        else {
             randomArray = data.split(",");
             input = randomArray[1];
             spotifyThis();
