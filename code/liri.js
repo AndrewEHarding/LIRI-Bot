@@ -1,7 +1,7 @@
 require("dotenv").config();
-// var request = require("request");
+var request = require("request");
 var fs = require("fs");
-// var Spotify = require('node-spotify-api');
+var Spotify = require('node-spotify-api');
 var moment = require("moment");
 var keys = require("./keys");
 
@@ -36,6 +36,7 @@ function concertThis() {
         });
 
     }
+    fs.appendFile("log.txt", `concert-this ${input}\n`);
 
 }
 
@@ -51,11 +52,12 @@ function spotifyThis() {
         spotify.search({ type: 'track', query: input }, function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 var jsonData = JSON.parse(body);
-                cLog(jsonData);
+                cLog(`Song Name: ${jsonData.tracks.items.name}\nArtist(s): ${jsonData.items[0].album.artists.join(", ")}\nAlbum: ${jsonData.items[0].album.name}\nSpotify Link: ${jsonData.items[0].album.artists.external_urls.spotify}`);
             }
         });
 
     }
+    fs.appendFile("log.txt", `spotify-this-song ${input}\n`);
 
 }
 
@@ -71,11 +73,13 @@ function movieThis() {
         request(`http://www.omdbapi.com/?t=${input}&apikey=${omdbKey}`, function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 var jsonData = JSON.parse(body);
-                cLog(jsonData);
+                cLog(`${jsonData.title}\nRelease Year: ${jsonData.year}\nRatings: ${jsonData.ratings[0].source} ${jsonData.ratings[0].value}, ${jsonData.ratings[1].source} ${jsonData.ratings[1].value}\nCountry of Production: ${jsonData.country}\nLanguage: ${jsonData.language}\nPlot: ${jsonData.plot}\nCast: ${jsonData.actors}`);
             }
         });
 
     }
+    fs.appendFile("log.txt", `movie-this ${input}\n`);
+
 }
 
 function doThis() {
@@ -90,6 +94,7 @@ function doThis() {
             spotifyThis();
         }
     });
+    fs.appendFile("log.txt", `do-what-it-says\n`);
 
 }
 
