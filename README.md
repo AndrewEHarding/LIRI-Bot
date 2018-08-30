@@ -2,12 +2,10 @@
 ### Week 10 Project
 
 #### Setup:
-1. Use the command line and cd into the LIRI-Bot folder
-2. Use command "vagrant up"
-3. Once your VM is running, use command "vagrant ssh"
-4. Now type "cd /var/code"
-3. Now run "npm install" to install needed modules
-5. You are now ready to use LIRI Bot!
+1. Put the LIRI-BOT folder into you VM and `vagrant up`
+2. `vagrant ssh` into the LIRI-BOT folder
+3. Now run `npm install` to install needed modules
+4. You are now ready to use LIRI Bot!
 
 Have you ever wanted the SIRI experience but either can't afford an iPhone, fear the robot overlords, or both?!? Then LIRI is for you! My Language Interpretation and Recognition Interface is capable of completing tasks laid out for it on the command line.
 Tasks include:

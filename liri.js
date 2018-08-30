@@ -31,8 +31,11 @@ function concertThis() {
         request(`https://rest.bandsintown.com/artists/${input}/events?app_id=${bandsKey}`, function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 var jsonData = JSON.parse(body);
-                cLog(jsonData);
-                // cLog(`Name of Venue: ${jsonData[0].venue.name}\nVenue Location: ${jsonData[0].venue.city}, ${jsonData[0].venue.region}\nDate: ${jsonData[0].datetime.moment(MMDDYYYY)}`);
+                cLog(`====================`);
+                cLog(`Name of Venue: ${jsonData[0].venue.name}`);
+                cLog(`Venue Location: ${jsonData[0].venue.city}, ${jsonData[0].venue.region}`);
+                cLog(`Date: ${moment(jsonData[0].datetime).format(`MM/DD/YYYY`)}`);
+                cLog(`====================`);
             }
         });
 
