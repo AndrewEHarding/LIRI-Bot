@@ -7,8 +7,8 @@ var keys = require("./keys");
 
 const cLog = console.log;
 
-bandsKey = keys.exports.bandsintown.id;
-omdbKey = keys.exports.omdb.id;
+bandsKey = keys.bandsintown.id;
+omdbKey = keys.omdb.id;
 
 var command = process.argv[2];
 var input = process.argv.slice(3).join(" ");
@@ -31,7 +31,8 @@ function concertThis() {
         request(`https://rest.bandsintown.com/artists/${input}/events?app_id=${bandsKey}`, function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 var jsonData = JSON.parse(body);
-                cLog(`Name of Venue: ${jsonData[0].vanue.name}\nVenue Location: ${jsonData[0].vanue.city}, ${jsonData[0].vanue.region}\nDate: ${jsonData[0].datetime.moment(MMDDYYYY)}`);
+                cLog(jsonData);
+                // cLog(`Name of Venue: ${jsonData[0].venue.name}\nVenue Location: ${jsonData[0].venue.city}, ${jsonData[0].venue.region}\nDate: ${jsonData[0].datetime.moment(MMDDYYYY)}`);
             }
         });
 
