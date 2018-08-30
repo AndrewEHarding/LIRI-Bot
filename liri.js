@@ -53,7 +53,8 @@ function spotifyThis() {
         spotify.search({ type: 'track', query: input }, function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 var jsonData = JSON.parse(body);
-                cLog(`Song Name: ${jsonData.tracks.items.name}\nArtist(s): ${jsonData.items[0].album.artists.join(", ")}\nAlbum: ${jsonData.items[0].album.name}\nSpotify Link: ${jsonData.items[0].album.artists.external_urls.spotify}`);
+                cLog(jsonData);
+                // cLog(`Song Name: ${jsonData.tracks.items.name}\nArtist(s): ${jsonData.items[0].album.artists.join(", ")}\nAlbum: ${jsonData.items[0].album.name}\nSpotify Link: ${jsonData.items[0].album.artists.external_urls.spotify}`);
             }
         });
 
@@ -74,7 +75,15 @@ function movieThis() {
         request(`http://www.omdbapi.com/?t=${input}&apikey=${omdbKey}`, function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 var jsonData = JSON.parse(body);
-                cLog(`${jsonData.title}\nRelease Year: ${jsonData.year}\nRatings: ${jsonData.ratings[0].source} ${jsonData.ratings[0].value}, ${jsonData.ratings[1].source} ${jsonData.ratings[1].value}\nCountry of Production: ${jsonData.country}\nLanguage: ${jsonData.language}\nPlot: ${jsonData.plot}\nCast: ${jsonData.actors}`);
+                cLog(`====================`);
+                cLog(`${jsonData.Title}`);
+                cLog(`Release Year: ${jsonData.Year}`);
+                cLog(`Ratings: ${jsonData.Ratings[0].Source} ${jsonData.Ratings[0].Value}, ${jsonData.Ratings[1].Source} ${jsonData.Ratings[1].Value}`);
+                cLog(`Country(s) of Production: ${jsonData.Country}`);
+                cLog(`Language: ${jsonData.Language}`);
+                cLog(`Plot: ${jsonData.Plot}`);
+                cLog(`Cast: ${jsonData.Actors}`);
+                cLog(`====================`);
             }
         });
 
