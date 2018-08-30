@@ -7,19 +7,18 @@ var keys = require("./keys");
 
 const cLog = console.log;
 
-bandsKey = keys.bandsintown.id;
-omdbKey = keys.omdb.id;
+var bandsKey = keys.bandsintown.id;
+var omdbKey = keys.omdb.id;
+var spotifyId = keys.spotify.id;
+var spotifySecret = keys.spotify.secret;
+
+var spotify = new Spotify({
+    id: spotifyId,
+    secret: spotifySecret
+});
 
 var command = process.argv[2];
 var input = process.argv.slice(3).join(" ");
-
-//REQUEST TEMPLATE
-// request("URL", function (error, response, body) {
-//     if (!error && response.statusCode === 200) {
-//         var jsonData = JSON.parse(body);
-
-//     }
-// });
 
 function concertThis() {
     if (!input) {
@@ -56,8 +55,13 @@ function spotifyThis() {
         spotify.search({ type: 'track', query: input }, function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 var jsonData = JSON.parse(body);
-                cLog(jsonData);
-                // cLog(`Song Name: ${jsonData.tracks.items.name}\nArtist(s): ${jsonData.items[0].album.artists.join(", ")}\nAlbum: ${jsonData.items[0].album.name}\nSpotify Link: ${jsonData.items[0].album.artists.external_urls.spotify}`);
+                // cLog(jsonData);
+                cLog(`====================`);
+                cLog(`Song Name: ${jsonData.tracks.items.name}`);
+                cLog(`Artist(s): ${jsonData.items[0].album.artists.join(", ")}`);
+                cLog(`Album: ${jsonData.items[0].album.name}`);
+                cLog(`Spotify Link: ${jsonData.items[0].album.artists.external_urls.spotify}`);
+                cLog(`====================`);
             }
         });
 
